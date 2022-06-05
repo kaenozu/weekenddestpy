@@ -12,6 +12,19 @@
                 {{ form.src }}
                 <button class="btn btn-primary kiwi_font" type="button" id="geoBtn">現在地取得</button>
             </div>
+            <div class="input-group col-md-auto mb-3">
+                <span class="input-group-text kiwi_font" id="basic-addon1">片道の距離(km)</span>
+                {{ form.distance }}
+                <datalist id="distanceList">
+                    <option value="30"></option>
+                    <option value="50"></option>
+                    <option value="100"></option>
+                    <option value="200"></option>
+                    <option value="300"></option>
+                    <option value="400"></option>
+                    <option value="500"></option>
+                    </datalist>
+            </div>
             <div class="d-grid gap-2 col-6 mx-auto">
                 <input type="submit" value="出発" class="kiwi_font btn btn-primary"/>
             </div>

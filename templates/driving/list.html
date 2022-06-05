@@ -5,7 +5,41 @@
 {% endblock title %}
 {% block content %}
     <div class="container">
-        <div class="mb-5 display-1 kiwi_font">週末ここに行こう</div>
-        {{ destForm }}
+        <div class="mb-5 display-1 kiwi_font">週末ここ行こう！</div>
+        <div class="mx-5">
+            <div class="py-2">
+                <div class="card">
+                    <div class="card-header display-5 kiwi_font">
+                        <li>{{ name }}</li>
+                    </div>
+                    <div class="card-body pt-5 bg-light">
+                        <figure>
+                            <iframe src="https://maps.google.com/maps?output=embed&ll={{ dest }}&t=m&hl=ja&z=15"
+                                    width="100%"
+                                    height="250"
+                                    frameborder="0"
+                                    style="border:0;"
+                                    allowfullscreen=""></iframe>
+                            <figcaption class="blockquote-footer">
+                                <p>{{ wiki }}</p>
+                            </figcaption>
+                        </figure>
+                        <blockquote class="blockquote pt-1 kiwi_font">
+                            <p>高速で{{ highway }}km</p>
+                        </blockquote>
+                        <blockquote class="blockquote mb-0 kiwi_font">
+                            <p>下道で{{ localway }}km</p>
+                        </blockquote>
+                        <div class="col display-5 kiwi_font ta-r">
+                            <a href="https://www.google.co.jp/maps/dir/{{ src }}/{{ dest }}/data=!4m3!4m2!3e0!4e0"
+                               target="_blank">ルート検索</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kiwi_font">
+            <a href="{% url 'driving:driving_index' %}">戻る</a>
+        </div>
     </div>
 {% endblock content %}
