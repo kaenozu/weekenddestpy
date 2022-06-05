@@ -3,6 +3,5 @@ from driving import views
 
 app_name = 'driving'
 urlpatterns = [
-    # 書籍
-    path('', views.book_list, name='book_list'), 
+    path('', views.driving_index, name='driving_index'),
 ]

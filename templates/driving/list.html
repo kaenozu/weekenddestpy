@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block title %}
+    週末どこ行く
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="mb-5 display-1 kiwi_font">週末ここに行こう</div>
+        {{ destForm }}
+    </div>
+{% endblock content %}
