@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block title %}
+    週末どこ行く
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="mb-5 display-1 kiwi_font">週末どこ行く？</div>
+        <form action="{% url 'driving:driving_index' %}" method="get">
+            <div class="input-group col-md-auto mb-3">
+                <span class="input-group-text kiwi_font" id="basic-addon1">出発地</span>
+                {{ form.src }}
+                <button class="btn btn-primary kiwi_font" type="button" id="geoBtn">現在地取得</button>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <input type="submit" value="出発" class="kiwi_font btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+    <script>
+        $('#geoBtn').on('click', function() {
+          navigator.geolocation.getCurrentPosition(function(pos){
+            $("#id_src").val(pos.coords.latitude + "," + pos.coords.longitude)
+          },function(){
+      
+          });
+        });
+    </script>
+{% endblock content %}

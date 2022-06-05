@@ -14,10 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from django.views.generic import RedirectView  # 追加
+from django.urls import include, path
+from django.views.generic import RedirectView
+
+import driving  # 追加
 
 urlpatterns = [
+    path('driving/', include('driving.urls')),
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='/admin')),  # ルート
+    path('', RedirectView.as_view(url='/driving')),  # ルート
 ]
