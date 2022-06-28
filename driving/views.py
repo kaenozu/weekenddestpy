@@ -43,9 +43,14 @@ def driving_index(request):
         for d in Dest.objects.all():
             dis = geodesic((float(src[0]), float(src[1])),
                            (float(d.latitude), float(d.longitude))).km
-            if dis <= 50:
+            if dis <= distanceParam and dis >= distanceParam * 0.9:
                 randomDest.append(d)
 
+        if not randomDest:
+            # 空ならすべてからランダムにする
+            for d in Dest.objects.all():
+                randomDest.append(d)
+                
         # ランダムに１つ選ぶ
         choiced = random.choice(randomDest)
 
@@ -54,17 +59,17 @@ def driving_index(request):
 
         if routecashmodel is not None:
             params = dict(
-                name=choiced.name, src=src[0]+ "," + src[1], dest=choiced.latitude + "," + choiced.longitude, highway=routecashmodel.highway, localway=routecashmodel.localway)
+                name=choiced.name, src=src[0] + "," + src[1], dest=choiced.latitude + "," + choiced.longitude, highway=routecashmodel.highway, localway=routecashmodel.localway)
         else:
             route = Route().getRoute(
                 [dict(src=srcParam, dest=choiced.latitude + "," + choiced.longitude, place_name=choiced.name)])
             params = dict(
-                name=choiced.name, src=src[0]+ "," + src[1], dest=choiced.latitude + "," + choiced.longitude, highway=route["result"][0]["distance"]["highway"], localway=route["result"][0]["distance"]["localway"])
+                name=choiced.name, src=src[0] + "," + src[1], dest=choiced.latitude + "," + choiced.longitude, highway=route["result"][0]["distance"]["highway"], localway=route["result"][0]["distance"]["localway"])
             routeCash.objects.create(src=src[0] + "," + src[1], dest=choiced.latitude + "," + choiced.longitude,
                                      highway=route["result"][0]["distance"]["highway"], localway=route["result"][0]["distance"]["localway"])
 
         wikiSumally = Wiki().getWiki(choiced.name)
-        
+
         params["wiki"] = wikiSumally if wikiSumally is not None else ""
 
         # params = dict(
