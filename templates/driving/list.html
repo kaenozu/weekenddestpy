@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
     <div class="container">
-        <div class="mb-5 display-1 kiwi_font">週末ここ行こう！</div>
+        <div class="mt-5 mb-5 display-1 kiwi_font">週末ここ行こう！</div>
         <div class="mx-5">
             <div class="py-2">
                 <div class="card">
@@ -30,16 +30,16 @@
                         <blockquote class="blockquote mb-0 kiwi_font">
                             <p>下道で{{ localway }}km</p>
                         </blockquote>
-                        <div class="col display-5 kiwi_font ta-r">
+                        <div class="col mt-5 display-5 kiwi_font ta-r">
                             <a href="https://www.google.co.jp/maps/dir/{{ src }}/{{ dest }}/data=!4m3!4m2!3e0!4e0"
                                target="_blank">ルート検索</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="kiwi_font">
-            <a href="{% url 'driving:driving_index' %}">戻る</a>
+            <div class="kiwi_font">
+                <a href="{% url 'driving:driving_index' %}">戻る</a>
+            </div>
         </div>
     </div>
 {% endblock content %}
