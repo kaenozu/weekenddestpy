@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300&display=swap" rel="stylesheet">
 <link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link rel="icon" type="image/png" href="{% static 'icon/favicon.png' %}">
 {% block extra_css %}{% endblock %}
 <title>{% block title %}{% endblock %}</title>
 </head>
@@ -20,8 +21,6 @@
       {{ content }}
     {% endblock %}
   </div>
-<script src="{% static 'cms/js/jquery-3.4.1.min.js' %}"></script>
-<script src="{% static 'cms/js/bootstrap.bundle.min.js' %}"></script>
 {% block extra_js %}{% endblock %}
 </body>
 </html>
