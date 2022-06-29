@@ -1,4 +1,5 @@
 import logging
+from unittest import skip
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from driving.forms import SrcForm
@@ -9,6 +10,7 @@ import random
 from driving.utils.geo import Geo
 from driving.utils.route import Route
 from driving.utils.wiki import Wiki
+from django.contrib import messages
 
 # Create your views here.
 
@@ -33,7 +35,13 @@ def driving_index(request):
             src.append(geocash.latitude)
             src.append(geocash.longitude)
         else:
-            geo = Geo().getGeo(srcParam)
+            try:
+                geo = Geo().getGeo(srcParam)
+            except:
+                messages.error(request, "場所が特定できません")
+                return render(request,
+                      'driving/index.html', params)
+           
             src.append(str(geo["result"]["latitude"]))
             src.append(str(geo["result"]["longitude"]))
             geoCash.objects.create(
@@ -61,19 +69,21 @@ def driving_index(request):
             params = dict(
                 name=choiced.name, src=src[0] + "," + src[1], dest=choiced.latitude + "," + choiced.longitude, highway=routecashmodel.highway, localway=routecashmodel.localway)
         else:
-            route = Route().getRoute(
+            try:
+                route = Route().getRoute(
                 [dict(src=srcParam, dest=choiced.latitude + "," + choiced.longitude, place_name=choiced.name)])
-            params = dict(
+                params = dict(
                 name=choiced.name, src=src[0] + "," + src[1], dest=choiced.latitude + "," + choiced.longitude, highway=route["result"][0]["distance"]["highway"], localway=route["result"][0]["distance"]["localway"])
-            routeCash.objects.create(src=src[0] + "," + src[1], dest=choiced.latitude + "," + choiced.longitude,
+                routeCash.objects.create(src=src[0] + "," + src[1], dest=choiced.latitude + "," + choiced.longitude,
                                      highway=route["result"][0]["distance"]["highway"], localway=route["result"][0]["distance"]["localway"])
+            finally:
+                # 距離計算のAPIがエラーの場合は何も出さない
+                pass
+                
 
         wikiSumally = Wiki().getWiki(choiced.name)
 
         params["wiki"] = wikiSumally if wikiSumally is not None else ""
-
-        # params = dict(
-        #     name=choiced.name, src=src[0]+ "," + src[1], dest=choiced.latitude + "," + choiced.longitude, highway=100, localway=200)
 
         return render(request,
                       'driving/list.html', params)

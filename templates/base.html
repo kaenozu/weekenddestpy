@@ -17,6 +17,13 @@
 </head>
 <body>
   <div class="container">
+    <div class="mt-2">
+    {% for message in messages %}
+    <div {% if message.tags %}class="{{ message.tags }}"{% endif %}>
+        {{ message }}
+    </div>
+    {% endfor %}
+  </div>
     {% block content %}
       {{ content }}
     {% endblock %}
