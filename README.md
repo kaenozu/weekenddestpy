@@ -12,5 +12,3 @@
 1. GAS(API)  
 1. bootstrap  
 
-## 実際に動かす
-https://weekenddest.site
